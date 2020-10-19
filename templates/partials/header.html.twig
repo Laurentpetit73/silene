@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="{{path('home')}}">MonSite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{path('home')}}">Accueil</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+        {% if app.user %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="{{app.user.picture}}" class="avatar avatar-mini" alt="avatar de {{app.user.fullname}}">
+                {{app.user.fullname}}
+                </a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{path()}}">Mon compte</a>
+                <a class="dropdown-item" href="{{path()}}">Mes reservations</a>
+                <a class="dropdown-item" href="{{path()}}">Modifier Compte</a>
+                <a class="dropdown-item" href="{{path()}}">Modifier Mot de pass</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{path()}}">Deconnexion</a>
+                </div>
+            </li>
+        {% else %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{{path('app_login')}}">Connexion</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{path('app_register')}}">Inscription</a>
+            </li>
+        {% endif %}
+        </ul>
+    </div>
+</nav>
+{% for label, messages in app.flashes %}
+    <div class="container" role="alert">
+    {% for message in messages %}  
+        <div class="alert alert-{{label}}" role="alert">
+            <p> {{message | raw}} </p>
+        </div>
+    {% endfor %}
+    </div>   
+{% endfor %}
