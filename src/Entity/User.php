@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -21,7 +22,23 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2,max=255,minMessage = "Votre prénom doit faire au moins {{ limit }} characters")
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=2,max=255,minMessage = "Votre nom doit faire au moins {{ limit }} characters")
+     * @Assert\NotBlank()
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email(message="Veuillez renseigner un email valide !")
      */
     private $email;
 
@@ -33,8 +50,15 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password",message = "Vous n'avez pas correctement confirmer votre mot de pass" )
+     * @Assert\NotBlank()
+     */
+    public $passwordConfirm;
 
     /**
      * @ORM\Column(type="boolean")
@@ -44,6 +68,30 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -130,4 +178,15 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getFullName()
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
+    public function getInitial()
+    {
+        return strtoupper($this->getFirstName()[0].' '.$this->getLastName()[0]);
+    }
+
 }
