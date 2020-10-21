@@ -3,10 +3,13 @@
 {% block title %}Password Reset Email Sent{% endblock %}
 
 {% block body %}
+<div class="container">
     <div class="alert alert-success">
-    Un e-mail de confirmation a été envoyé à votre adresse e-mail : {{mail}}
+    <p>Un e-mail a été envoyé à votre adresse : <strong>{{mail}}</strong></p>
+    <p>Veuiller cliquer sur le lien afin réinitialiser votre mot de passe . Ce lien expirera dans <strong>{{ tokenLifetime|date('g') }} heures</strong></p>
+    <p>Si vous ne recevez pas ce mail, meci de verifier vos spams ou <strong><a href="{{ path('app_forgot_password_request') }}">d'essayer à nouveau</a></strong></p>
     </div>
+</div>
    
-    <p>An email has been sent that contains a link that you can click to reset your password. This link will expire in {{ tokenLifetime|date('g') }} hour(s).</p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+   
 {% endblock %}
