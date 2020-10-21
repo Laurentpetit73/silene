@@ -68,6 +68,9 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/check_email.html.twig', [
             'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
+            'mail' => $_REQUEST['mail']
+            
+            
         ]);
     }
 
@@ -138,10 +141,12 @@ class ResetPasswordController extends AbstractController
 
         // Marks that you are allowed to see the app_check_email page.
         $this->setCanCheckEmailInSession();
+        
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('danger',"Cette l'adresse E-mail : <strong>".$emailFormData."</strong> n'éxiste pas dans notre Base de Données");
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         try {
@@ -151,12 +156,12 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
-
-            return $this->redirectToRoute('app_check_email');
+             $this->addFlash('reset_password_error', sprintf(
+               'There was a problem handling your password reset request - %s',
+                $e->getReason()
+             ));
+             
+            return $this->redirectToRoute('app_check_email',['mail'=> $user->getEmail()]);
         }
 
         $email = (new TemplatedEmail())
@@ -172,6 +177,6 @@ class ResetPasswordController extends AbstractController
 
         $mailer->send($email);
 
-        return $this->redirectToRoute('app_check_email');
+        return $this->redirectToRoute('app_check_email',['mail'=> $user->getEmail()]);
     }
 }

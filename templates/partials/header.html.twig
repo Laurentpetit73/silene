@@ -37,8 +37,8 @@
 {% for label, messages in app.flashes %}
     <div class="container" role="alert">
     {% for message in messages %}  
-        <div class="alert alert-{{label}}" role="alert">
-            <p> {{message | raw}} </p>
+        <div class="alert alert-{{label}} mt-3 d-flex justify-content-center" role="alert">
+            <p style="padding-top:16px"> {{message | raw}} </p>
         </div>
     {% endfor %}
     </div>   

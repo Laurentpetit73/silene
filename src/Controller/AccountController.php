@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\ProfilType;
 use App\Entity\PasswordUpdate;
 use App\Form\PasswordUpdateType;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

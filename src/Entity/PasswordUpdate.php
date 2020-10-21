@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PasswordUpdateRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class PasswordUpdate
@@ -13,11 +14,14 @@ class PasswordUpdate
 
     
     private $oldPass;
-
-    
+    /** 
+    * @Assert\Length(min=7,max=255,minMessage = "Votre Mot de passe doit faire au moins {{ limit }} characters")
+    * @Assert\NotBlank()
+    */
     private $newPass;
-
-    
+    /** 
+    * @Assert\EqualTo(propertyPath="newPass",message = "Vous n'avez pas correctement confirmer votre mot de pass" )
+    */
     private $confirmPass;
 
     public function getId(): ?int
