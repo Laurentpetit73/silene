@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-3 text-center">
+            {{user.initial}}
+        </div>
+        <div class="col-9">
+            <h1>{{user.fullName}}</h1>
+            {% if user is same as(app.user) %}
+                <div class="mt-3">
+                    <a class="btn btn-primary" href="{{path('account_profil')}}">Modifier mes Informations</a>
+                    <a class="btn btn-primary" href="{{path('account_pass')}}">Modifier mot de pass</a>
+                </div>
+            {% endif  %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

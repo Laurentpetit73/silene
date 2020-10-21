@@ -56,7 +56,6 @@ class User implements UserInterface
 
     /**
      * @Assert\EqualTo(propertyPath="password",message = "Vous n'avez pas correctement confirmer votre mot de pass" )
-     * @Assert\NotBlank()
      */
     public $passwordConfirm;
 
@@ -77,7 +76,7 @@ class User implements UserInterface
 
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = $firstName;
+        $this->firstName = ucfirst($firstName);
 
         return $this;
     }
@@ -89,7 +88,7 @@ class User implements UserInterface
 
     public function setLastName(string $lastName): self
     {
-        $this->lastName = $lastName;
+        $this->lastName = ucfirst($lastName);
 
         return $this;
     }
@@ -186,7 +185,7 @@ class User implements UserInterface
 
     public function getInitial()
     {
-        return strtoupper($this->getFirstName()[0].' '.$this->getLastName()[0]);
+        return strtoupper($this->getFirstName()[0].$this->getLastName()[0]);
     }
 
 }
