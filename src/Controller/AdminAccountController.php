@@ -12,8 +12,10 @@ class AdminAccountController extends AbstractController
      */
     public function index()
     {
+
+
         return $this->render('admin/account/login.html.twig', [
-            'controller_name' => 'bg lolo',
+            'form' => $form->createView(),
         ]);
     }
 }
