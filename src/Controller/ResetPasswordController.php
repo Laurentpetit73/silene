@@ -59,7 +59,7 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("/check-email", name="app_check_email")
      */
-    public function checkEmail(): Response
+    public function checkEmail($mail): Response
     {
         // We prevent users from directly accessing this page
         if (!$this->canCheckEmail()) {
@@ -68,7 +68,7 @@ class ResetPasswordController extends AbstractController
 
         return $this->render('reset_password/check_email.html.twig', [
             'tokenLifetime' => $this->resetPasswordHelper->getTokenLifetime(),
-            'mail' => $_REQUEST['mail']
+            'mail' => $mail
             
             
         ]);
@@ -133,7 +133,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
@@ -161,7 +161,7 @@ class ResetPasswordController extends AbstractController
                 $e->getReason()
              ));
              
-            return $this->redirectToRoute('app_check_email',['mail'=> $user->getEmail()]);
+            return $this->forward('App\Controller\ResetPasswordController::checkEmail',['mail'=> $user->getEmail()]);
         }
 
         $email = (new TemplatedEmail())
@@ -177,6 +177,6 @@ class ResetPasswordController extends AbstractController
 
         $mailer->send($email);
 
-        return $this->redirectToRoute('app_check_email',['mail'=> $user->getEmail()]);
+        return $this->forward('App\Controller\ResetPasswordController::checkEmail',['mail'=> $user->getEmail()]);
     }
 }
