@@ -6,7 +6,7 @@
   <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
+      <a class="nav-link" href="{{path('app_logout')}}">Deconnecter</a>
     </li>
   </ul>
 </nav>
@@ -27,7 +27,7 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="{{path('admin_dashboard')}}">
+            <a class="nav-link {% if current_menu == 'dashboard' %} active {% endif %}" href="{{path('admin_dashboard')}}">
               <span data-feather="home"></span>
               Dashboard <span class="sr-only">(current)</span>
             </a>
@@ -45,7 +45,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{path('admin_customer')}}">
+            <a class="nav-link {% if current_menu == 'customer' %} active {% endif %}" href="{{path('admin_customer')}}">
               <span data-feather="users"></span>
               Customers
             </a>

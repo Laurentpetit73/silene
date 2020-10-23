@@ -22,6 +22,7 @@ class AdminCustomerController extends AbstractController
             ->setCurrentPage($page);
 
         return $this->render('admin/customer/index.html.twig', [
+            'current_menu' => 'customer',
             'pagination' => $pagination,
         ]);
     }
@@ -50,6 +51,7 @@ class AdminCustomerController extends AbstractController
         }
         
         return $this->render('admin/customer/edit.html.twig', [
+            'current_menu' => 'customer',
             'form' => $form->createView(),
         ]);
     }

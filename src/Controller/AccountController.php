@@ -23,7 +23,8 @@ class AccountController extends AbstractController
         $user = $this->getUser();
         
         return $this->render('user/index.html.twig', [
-            'user' => $user  
+            'user' => $user ,
+            'current_menu' => '', 
         ]);
     }
 
@@ -48,7 +49,8 @@ class AccountController extends AbstractController
        
         
         return $this->render('account/profil.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'current_menu' => '', 
              
         ]);
     }
@@ -77,7 +79,8 @@ class AccountController extends AbstractController
             }
         }
         return $this->render('account/pass.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'current_menu' => '', 
              
         ]);
     }

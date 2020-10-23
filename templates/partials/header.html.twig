@@ -5,8 +5,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item {% if current_menu == 'home' %} active {% endif %}">
                 <a class="nav-link" href="{{path('home')}}">Accueil</a>
+            </li>
+            <li class="nav-item {% if current_menu == 'contact' %} active {% endif %}">
+                <a class="nav-link" href="{{path('contact')}}">Contact</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
