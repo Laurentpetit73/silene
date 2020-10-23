@@ -14,8 +14,6 @@ class AdminAccountController extends AbstractController
     {
 
 
-        return $this->render('admin/account/login.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('admin/account/login.html.twig');
     }
 }

@@ -76,7 +76,7 @@ class User implements UserInterface
 
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = ucfirst($firstName);
+        $this->firstName =  ucfirst(strtolower($firstName));
 
         return $this;
     }
@@ -88,7 +88,7 @@ class User implements UserInterface
 
     public function setLastName(string $lastName): self
     {
-        $this->lastName = ucfirst($lastName);
+        $this->lastName =  ucfirst(strtolower($lastName));
 
         return $this;
     }
@@ -185,7 +185,7 @@ class User implements UserInterface
 
     public function getInitial()
     {
-        return strtoupper($this->getFirstName()[0].$this->getLastName()[0]);
+        return $this->getFirstName()[0].$this->getLastName()[0];
     }
 
 }
