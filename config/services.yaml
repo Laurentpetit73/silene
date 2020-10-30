@@ -23,6 +23,7 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
+
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
@@ -30,6 +31,8 @@ services:
     App\Service\Pagination:
         arguments:
             $templatePath: 'admin/partials/pagination.html.twig'
+
+   
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

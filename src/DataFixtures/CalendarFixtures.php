@@ -3,14 +3,20 @@
 namespace App\DataFixtures;
 
 use App\Entity\Calendar;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
-class CalendarFixtures extends Fixture
+class CalendarFixtures extends Fixture implements FixtureGroupInterface
 {
+    public static function getGroups(): array
+    {
+        return ['group2'];
+    }
+
     public function load(ObjectManager $manager)
     {
-        $date= new \DateTime('2018-01-01');
+        $date= new \DateTime('2020-01-01');
         $interval = new \DateInterval('P1D');
 
         $month = ['01'=> ['Janvier','Janv'],
@@ -47,7 +53,8 @@ class CalendarFixtures extends Fixture
                     ->setDayNameMin($day[$date->format('w')][1])
                     ->setMonthName($month[$date->format('m')][0])
                     ->setMonthNameMin($month[$date->format('m')][1])
-                    ->setDayOfWeek($date->format('w'));
+                    ->setDayOfWeek($date->format('w'))
+                    ->setPrice(200);
             $date->add($interval);
             $manager->persist($calendar);
 

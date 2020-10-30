@@ -67,6 +67,16 @@ class Calendar
      */
     private $dayNameMin;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="period")
+     */
+    private $booking;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,6 +198,30 @@ class Calendar
     public function setDayNameMin(string $dayNameMin): self
     {
         $this->dayNameMin = $dayNameMin;
+
+        return $this;
+    }
+
+    public function getBooking(): ?Booking
+    {
+        return $this->booking;
+    }
+
+    public function setBooking(?Booking $booking): self
+    {
+        $this->booking = $booking;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

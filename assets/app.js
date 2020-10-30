@@ -10,7 +10,7 @@ import './styles/app.css';
 
 var $ = require('jquery')
 
-global.$ = $; 
+global.$ = global.jQuery = $; 
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'

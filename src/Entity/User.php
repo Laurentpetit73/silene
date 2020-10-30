@@ -64,6 +64,11 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="customer", cascade={"persist", "remove"})
+     */
+    private $booking;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -186,6 +191,23 @@ class User implements UserInterface
     public function getInitial()
     {
         return $this->getFirstName()[0].$this->getLastName()[0];
+    }
+
+    public function getBooking(): ?Booking
+    {
+        return $this->booking;
+    }
+
+    public function setBooking(Booking $booking): self
+    {
+        $this->booking = $booking;
+
+        // set the owning side of the relation if necessary
+        if ($booking->getCustomer() !== $this) {
+            $booking->setCustomer($this);
+        }
+
+        return $this;
     }
 
 }

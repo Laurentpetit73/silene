@@ -39,9 +39,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link {% if current_menu == 'booking' %} active {% endif %}" href="{{path('admin_booking')}}">
               <span data-feather="shopping-cart"></span>
-              Products
+              Reservation
             </a>
           </li>
           <li class="nav-item">
