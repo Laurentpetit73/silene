@@ -16,6 +16,7 @@ class Pagination{
     private $twig;
     private $route;
     private $templatePath;
+    private $tri = [];
 
     public function __construct(EntityManagerInterface $manager , Environment $twig, RequestStack $request , $templatePath)
     {
@@ -53,6 +54,15 @@ class Pagination{
         return $this->limit;
     }
 
+    public function setTri($tri){
+        $this->tri = $tri;
+        return $this;
+    }
+
+    public function getTri(){
+        return $this->tri;
+    }
+
     public function setStart(){
         $this->start = $this->getCurrentPage()*$this->limit-$this->limit;
         return $this;
@@ -87,7 +97,7 @@ class Pagination{
         }
         $start = $this->currentPage*$this->limit-$this->limit;
         $repo = $this->manager->getRepository($this->entityClass);
-        return $repo->findBy([],[],$this->limit,$start);
+        return $repo->findBy([],$this->tri,$this->limit,$start);
 
     }
     public function getPages(){

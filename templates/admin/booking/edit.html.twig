@@ -1,0 +1,25 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello AdminDashboardController!{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-6">
+    <h2 class="mb-3">Reservation n ° {{booking.id}} </h2>
+    <p>Date d'arrivée : {{booking.startDate|date("d/m/Y")}}</p>
+    <p>Date de départ : {{booking.endDate|date("d/m/Y")}}</p>
+    <p>Nombre de Jour : {{booking.nbJour}}</p>
+    <p>Nombre de voyageur : 8</p>
+    <p>Bébé : non</p>
+    <p>Commentaire : Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, blanditiis! Optio provident ipsum suscipit? Voluptates ratione voluptatibus iure autem nesciunt reprehenderit consectetur nostrum non eveniet eaque quae, nam debitis temporibus.</p>
+  </div>
+  <div class="col-6">
+    <h2 class="mb-3">Info Client</h2>
+    <p>Nom : {{booking.customer.lastName}}</p>
+    <p>Prénom : {{booking.customer.firstName}}</p>
+    <p>Mail : {{booking.customer.email}}</p>
+    <p>Téléphone : +33629598292</p>
+  </div>
+</div>
+<a href="{{path('admin_booking_confirm',{'id':booking.id})}}" class="btn btn-primary">Accepter</a>
+{% endblock %}

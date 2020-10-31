@@ -14,20 +14,22 @@
               <th>Fin</th>
               <th>nb jour</th>
               <th>Prix</th>
+              <th>Accepter</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
           {% for booking in pagination.data %}
-            <tr>
+            <tr {% if booking.IsBooking == false %} class="text-danger"{% endif %}>
               <td>{{booking.id}}</td>
               <td>{{booking.customer.fullName}}</td>
               <td>{{booking.startDate|date("d/m/Y")}}</td>
               <td>{{booking.endDate|date("d/m/Y")}}</td>
               <td>{{booking.nbJour}}</td>
               <td>{{booking.amount}}</td>
+              <td>{% if booking.IsBooking == false %} Non {% else %} Oui {% endif %}</td>
               <td>
-                <a class="btn btn-primary" href="#"><i class="fas fa-edit"></i></a>
+                <a class="btn btn-primary" href="{{path('admin_booking_edit',{'id':booking.id})}}"><i class="fas fa-edit"></i></a>
                 <a class="btn btn-danger" href="{{path('admin_booking_delete',{'id':booking.id})}}"><i class="fas fa-trash"></i></a>
               </td>
             </tr>

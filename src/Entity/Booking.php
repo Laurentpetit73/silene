@@ -34,7 +34,7 @@ class Booking
     private $endDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="booking", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="booking")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customer;
@@ -127,26 +127,27 @@ class Booking
         return $this;
     }
 
-   
-    public function setPeriod(): self
-    { 
-        $days =  $this->manager->createQuery(
+    public function getCalendars():array
+    {
+        return $this->manager->createQuery(
             'SELECT  c
             FROM App\Entity\Calendar c
             WHERE c.Date >= :startdate')
             ->setParameter('startdate',date_format($this->getStartDate(), 'Y-m-d 00:00:00'))
             ->setMaxResults($this->nbJour)
             ->getResult();
-       
-        //dump(date_format($this->getStartDate(), 'Y-m-d 00:00:00'));
-        //die();
-       
 
+    }
+
+   
+    public function setPeriod(): self
+    { 
+        $days  = $this->getCalendars(); 
+       
+       
         foreach($days as $day){
             $this->addPeriod($day);
-            $this->manager->persist($day);
-            
-            
+            $this->manager->persist($day);              
         } 
         
         return $this;
@@ -168,7 +169,12 @@ class Booking
     public function setAmount(): self
     {
        $amont = 0;
-       foreach ($this->getPeriod() as $day){
+       if($this->IsBooking){
+        $days = $this->getPeriod();
+        }else{
+        $days = $this->getCalendars();
+        }
+       foreach ($days as $day){
            $amont += $day->getPrice();
        } 
         $this->amount = $amont;
@@ -200,9 +206,10 @@ class Booking
     public function initialise():self
     {
         $this->setNbJour();
-        
-        $this->setPeriod();
-        
+
+        if($this->IsBooking){
+            $this->setPeriod();
+        }
         $this->setAmount();
 
         return $this;
@@ -217,6 +224,13 @@ class Booking
     public function setIsBooking(bool $IsBooking): self
     {
         $this->IsBooking = $IsBooking;
+
+        return $this;
+    }
+
+    public function setManager($manager): self
+    {
+        $this->manager = $manager;
 
         return $this;
     }

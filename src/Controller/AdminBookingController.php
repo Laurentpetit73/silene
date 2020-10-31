@@ -17,6 +17,7 @@ class AdminBookingController extends AbstractController
     {
         $pagination->setEntityClass(Booking::class)
             ->setCurrentPage($page)
+            ->setTri( ['startDate' => 'DESC'])
             ->setLimit(20);
 
         return $this->render('admin/booking/index.html.twig', [
@@ -32,6 +33,27 @@ class AdminBookingController extends AbstractController
         $manager->remove($booking);
         $manager->flush();
         $this->addFlash('success',"La reservation a bien été supprimé");
+        return $this->redirectToRoute('admin_booking');
+    }
+    /**
+     * @Route("/admin/booking/{id}/edit", name="admin_booking_edit")
+     */
+    public function edit(Booking $booking , EntityManagerInterface $manager )
+    {
+        return $this->render('admin/booking/edit.html.twig', [
+            'current_menu' => 'booking',
+            'booking' => $booking,
+        ]);
+    }
+    /**
+     * @Route("/admin/booking/{id}/confirm", name="admin_booking_confirm")
+     */
+    public function confirm(Booking $booking , EntityManagerInterface $manager )
+    {
+        $booking->setIsBooking(true)->setManager($manager)->initialise();
+        $manager->persist($booking);
+        $manager->flush();
+        $this->addFlash('success',"La reservation de <strong>".$booking->getCustomer()->getFullName()."</strong> a bien été accepté");
         return $this->redirectToRoute('admin_booking');
     }
 }
