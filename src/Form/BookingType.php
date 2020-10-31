@@ -25,7 +25,7 @@ class BookingType extends AbstractType
     {
         $builder
             ->add('startDate',TextType::class, ['label'=>'Date d\'arrivé','attr' => ['autocomplete'=>"off"]])
-            ->add('endDate',TextType::class, ['label'=>'Date d\'arrivé','attr' => ['autocomplete'=>"off"]])
+            ->add('endDate',TextType::class, ['label'=>'Date de départ','attr' => ['autocomplete'=>"off"]])
             ->add('customer',EntityType::class, [
                 // looks for choices from this entity
                 'class' => User::class,

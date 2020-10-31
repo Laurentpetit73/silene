@@ -78,6 +78,16 @@ class Calendar
      */
     private $price;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isStart;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isEnd;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -223,6 +233,30 @@ class Calendar
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getIsStart(): ?bool
+    {
+        return $this->isStart;
+    }
+
+    public function setIsStart(bool $isStart): self
+    {
+        $this->isStart = $isStart;
+
+        return $this;
+    }
+
+    public function getIsEnd(): ?bool
+    {
+        return $this->isEnd;
+    }
+
+    public function setIsEnd(bool $isEnd): self
+    {
+        $this->isEnd = $isEnd;
 
         return $this;
     }

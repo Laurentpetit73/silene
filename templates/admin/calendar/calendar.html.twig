@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{asset('css/style.css')}}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+     <div class="container">
+    <nav>
+    <div class="triangle-left"></div>
+        <div class="year">{{year}}</div>
+        <div class="triangle-right"></div> 
+    </nav>
+        <div class="calendar-container">
+        {{ test.render }}
+        </div>
+    </div> 
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

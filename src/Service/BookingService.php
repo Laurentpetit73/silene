@@ -1,37 +1,57 @@
 <?php
 
 namespace App\Service;
-
-use App\Entity\Booking;
-use App\Repository\BookingRepository;
-use Twig\Environment;
 use Doctrine\ORM\EntityManagerInterface;
 
 
 class BookingService{
 
-    private $repo;
     private $manager;
 
-    public function __construct( BookingRepository $repo)
+    public function __construct(EntityManagerInterface $manager)
     {
-        $this->repo = $repo;
-        
-        
+        $this->manager = $manager;  
+    }
+
+    
+    public function getNotConfirmBooking(){
+        return $this->manager->createQuery(
+            'SELECT  b
+            FROM App\Entity\Booking b
+            WHERE b.IsBooking = 0')
+            ->getResult();
     }
 
     public function getNotAvailableDays(){
         $notavailableday=[];
-        $bookings = $this->repo->findAll();
+        $days =  $this->manager->createQuery(
+            'SELECT  c
+            FROM App\Entity\Calendar c
+            WHERE c.booking IS NOT NULL')
+            ->getResult();
 
-        foreach ( $bookings as $booking){
-    
-            foreach($booking->getPeriod() as $day){
-                $notavailableday[]= $day->getDate();
-            }
+        foreach ( $days as $day){
+            $notavailableday[]= $day->getDate();
         }
-        return $notavailableday;
-        
+
+        return $notavailableday;    
 
     }
+
+    public function getNotAvailableDaysEnd(){
+        $notavailableday=[];
+        $days =  $this->manager->createQuery(
+            'SELECT  c
+            FROM App\Entity\Calendar c
+            WHERE c.booking IS NOT NULL AND c.isStart = 0')
+            ->getResult();
+
+        foreach ( $days as $day){
+            $notavailableday[]= $day->getDate();
+        }
+
+        return $notavailableday;    
+
+    }
+    
 }

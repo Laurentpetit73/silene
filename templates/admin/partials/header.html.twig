@@ -25,6 +25,9 @@
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
+          <span>GESTION</span>
+        </h6>
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link {% if current_menu == 'dashboard' %} active {% endif %}" href="{{path('admin_dashboard')}}">
@@ -33,66 +36,45 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file"></span>
-              Orders
+            <a class="nav-link" href="{{path('admin_calendar')}}">
+              <span data-feather="calendar"></span>
+              Calendrier
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if current_menu == 'booking' %} active {% endif %}" href="{{path('admin_booking')}}">
-              <span data-feather="shopping-cart"></span>
-              Reservation
+              <span data-feather="book-open"></span>
+              Reservation {% if bookingService.getNotConfirmBooking|length != 0  %} <span class="badge badge-pill badge-danger">{{bookingService.getNotConfirmBooking|length}}</span> {% endif %}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if current_menu == 'customer' %} active {% endif %}" href="{{path('admin_customer')}}">
               <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="layers"></span>
-              Integrations
+              Clients
             </a>
           </li>
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved reports</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
-          </a>
+          <span>CONFIGURATION</span>
         </h6>
         <ul class="nav flex-column mb-2">
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Current month
+              <span data-feather="dollar-sign"></span>
+              Prix
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Last quarter
+              <span data-feather="sun"></span>
+              Saison
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
+              <span data-feather="at-sign"></span>
+              Site
             </a>
           </li>
         </ul>

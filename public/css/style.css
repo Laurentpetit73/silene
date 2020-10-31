@@ -1,0 +1,230 @@
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+p{
+  margin :0;
+}
+body{
+    background-color: #f5f5f5;
+    font-family: 'Kanit', sans-serif;
+    margin: 0;
+    font-size: 14px;
+  
+}
+nav{
+  overflow: hidden;
+  display: flex;
+  justify-content:center;
+  font-size: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: #f5f5f5;
+
+}
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-right: 24px solid #4a4a4a;
+  border-bottom: 12px solid transparent;
+  position: relative;
+  right: 10px;
+  top: 20px;
+}
+
+.triangle-left:hover{
+  border-top: 15px solid transparent;
+  border-right: 24px solid#4a4a4a !important;
+  border-bottom: 15px solid transparent;
+  top: 17px;
+}
+
+.triangle-right {
+  width: 0;
+  height: 0px;
+  border-top: 12px solid transparent;
+  border-left: 24px solid #4a4a4a;
+  border-bottom: 12px solid transparent;
+  position: relative;
+  left: 10px;
+  top: 20px;
+}
+
+
+
+.triangle-right:hover{
+  border-top: 15px solid transparent;
+  border-left: 24px solid#4a4a4a;
+  border-bottom: 15px solid transparent;
+  top: 17px;
+}
+.container{
+
+  margin-top: 65px;
+  background-color: blue;
+  background-color: #f5f5f5;
+ 
+
+  
+
+    
+}
+
+.calendar-container{
+  border-radius: 5px ;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 1440px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .6);
+ 
+
+}
+
+.first-line{
+  display : flex;
+  justify-content:start;
+  width: 100%;
+
+
+}
+
+
+
+
+.date{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 46px;
+  background-color: white;
+  text-align: center;
+  border-left: #d9d9d9 solid 1px ;
+  position: relative;
+}
+
+.date:first-child{
+  border-left: none ;
+
+}
+
+.trait{
+  display: inline-block;
+  position: absolute;
+  background-color: #4a4a4a;
+  height: 5px;
+  width: 47px;
+  top: -5px;
+  left : -1px;
+ 
+
+}
+
+.date.dim {
+  background-color: #eaeaea;
+  color: #4a4a4a !important;
+}
+
+.date.dim .nom-jour{
+
+  color: #4a4a4a !important;
+}
+
+.nom-jour {
+  color:#d9d9d9;
+  font-weight: 700;
+  font-size: 15px;
+
+}
+
+  .date.dim .num-jour{
+
+    color: #4a4a4a !important;
+  }
+  
+
+.num-jour {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color:grey ;
+  font-size: 20px;
+  
+  
+}
+
+.nom-moi{
+  margin-bottom: 2px;
+}
+
+.date.dim .nom-moi{
+  color: #4a4a4a !important;
+}
+
+.bar {
+  height: 2px;
+  width: 100%;
+  background-color: #d9d9d9;
+  display: inline-block;
+  
+}
+.book {
+  height: 60px;
+  width: 100%;
+  background-color: #d9d9d9;
+  display : flex;
+  justify-content:start;
+  
+}
+
+.book .color {
+  height: 50px;
+  width: 100%;
+  background-color: #9fe1b4;
+  display: inline-block;
+  margin-top: 5px;
+  width: 46px;
+
+}
+
+.book .free {
+  height: 50px;
+  width: 100%;
+  background-color: #9fe1b4;
+  display: inline-block;
+  margin-top: 5px;
+  width: 46px;
+  
+}
+.book .test {
+  height: 50px;
+  width: 100%;
+  background-color: yellow;
+  display: inline-block;
+  margin-top: 5px;
+  width: 46px;
+  
+}
+.book .debut {
+  height: 50px;
+  width: 100%; 
+  background: linear-gradient(127deg, #9fe1b4 45%,rgba(0, 0, 255, 0) 45% 55%, yellow 55%); 
+  display: inline-block;
+  margin-top: 5px;
+  width: 46px;
+  
+}
+.book .fin {
+  height: 50px;
+  width: 100%;
+  background: linear-gradient(127deg, yellow 45%,rgba(0, 0, 255, 0) 45% 55%, #9fe1b4 55%); 
+  display: inline-block;
+  margin-top: 5px;
+  width: 46px;
+  
+}
+  
+
+           

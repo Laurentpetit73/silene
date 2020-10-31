@@ -143,9 +143,16 @@ class Booking
     public function setPeriod(): self
     { 
         $days  = $this->getCalendars(); 
-       
-       
+        $i=0;
+        $end = count($days)-1;
         foreach($days as $day){
+            if($i === 0){
+                $day->setIsStart(true);
+            }
+            if($end === $i){
+                $day->setIsEnd(true);
+            }
+            $i++;
             $this->addPeriod($day);
             $this->manager->persist($day);              
         } 

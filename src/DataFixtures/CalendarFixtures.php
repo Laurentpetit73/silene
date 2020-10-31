@@ -16,7 +16,8 @@ class CalendarFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager)
     {
-        $date= new \DateTime('2020-01-01');
+        $actual= (new \DateTime('now'))->format('Y-m-d');
+        $date= new \DateTime($actual);
         $interval = new \DateInterval('P1D');
 
         $month = ['01'=> ['Janvier','Janv'],
@@ -54,7 +55,9 @@ class CalendarFixtures extends Fixture implements FixtureGroupInterface
                     ->setMonthName($month[$date->format('m')][0])
                     ->setMonthNameMin($month[$date->format('m')][1])
                     ->setDayOfWeek($date->format('w'))
-                    ->setPrice(200);
+                    ->setPrice(200)
+                    ->setIsStart(false)
+                    ->setIsEnd(false);
             $date->add($interval);
             $manager->persist($calendar);
 

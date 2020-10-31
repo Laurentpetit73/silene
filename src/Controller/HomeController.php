@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
+use App\Repository\CalendarRepository;
 use App\Service\BookingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +17,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function home(EntityManagerInterface $manager, Request $request, BookingRepository $repo)
+    public function home(EntityManagerInterface $manager, Request $request, BookingService $bookingservice)
     {
         $booking = New Booking($manager);
         $form = $this->createForm(BookingType::class,$booking);
 
-        $test = new BookingService($repo);
-        $NotAvailableDay = $test->getNotAvailableDays();
-
+        $NotAvailableDay = $bookingservice->getNotAvailableDays();
+        $NotAvailableDayEnd = $bookingservice->getNotAvailableDaysEnd();
 
         $form->handleRequest($request);
 
@@ -37,7 +37,8 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'current_menu' => 'home',
             'form' => $form->createView(),
-            'NotAvailableDays' => $NotAvailableDay
+            'NotAvailableDays' => $NotAvailableDay,
+            'NotAvailableDaysEnd' => $NotAvailableDayEnd
         ]);
     }
 
@@ -46,8 +47,6 @@ class HomeController extends AbstractController
      */
     public function contact(BookingRepository $repo)
     {
-        dump($repo->findAll());
-        die();
 
         return $this->render('home/contact.html.twig', [
             'current_menu' => 'contact',
