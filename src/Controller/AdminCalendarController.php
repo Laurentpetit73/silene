@@ -14,7 +14,7 @@ class AdminCalendarController extends AbstractController
      */
     public function index(CalendarRepository $calendar)
     {
-        $year = '2020';
+        $year = '2021';
         $calendaryear = $calendar->findBy(['year' => $year]);
         $cal = new RenderCalendar($year, 3 ,11,$calendaryear);
         //$year = getdate()['year'];

@@ -189,42 +189,6 @@ nav{
 
 }
 
-.book .free {
-  height: 50px;
-  width: 100%;
-  background-color: #9fe1b4;
-  display: inline-block;
-  margin-top: 5px;
-  width: 46px;
-  
-}
-.book .test {
-  height: 50px;
-  width: 100%;
-  background-color: yellow;
-  display: inline-block;
-  margin-top: 5px;
-  width: 46px;
-  
-}
-.book .debut {
-  height: 50px;
-  width: 100%; 
-  background: linear-gradient(127deg, #9fe1b4 45%,rgba(0, 0, 255, 0) 45% 55%, yellow 55%); 
-  display: inline-block;
-  margin-top: 5px;
-  width: 46px;
-  
-}
-.book .fin {
-  height: 50px;
-  width: 100%;
-  background: linear-gradient(127deg, yellow 45%,rgba(0, 0, 255, 0) 45% 55%, #9fe1b4 55%); 
-  display: inline-block;
-  margin-top: 5px;
-  width: 46px;
-  
-}
   
 
            

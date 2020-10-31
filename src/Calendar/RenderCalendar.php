@@ -43,14 +43,16 @@ class RenderCalendar{
 
     public function getClass($day)
     {
-        if($this->endday == true){
-            $class = 'fin';
+        if($this->endday == true && $day->getIsStart() == true){
+            $class = 'background: linear-gradient(127deg, yellow 45%,rgba(0, 0, 255, 0) 45% 55%, yellow 55%);';
+        }else if($this->endday == true){
+            $class = 'background: linear-gradient(127deg, yellow 45%,rgba(0, 0, 255, 0) 45% 55%, #9fe1b4 55%);';
         }else if($day->getBooking() != null && $day->getIsStart() == true){
-            $class = 'debut';
+            $class = 'background: linear-gradient(127deg, #9fe1b4 45%,rgba(0, 0, 255, 0) 45% 55%, yellow 55%)';
         }else if($day->getBooking() != null){
-            $class = 'test';
+            $class = 'background-color: yellow';
         }else{
-            $class = 'free';
+            $class = 'background-color: #9fe1b4';
         }
 
         if($day->getIsEnd()){
@@ -76,11 +78,11 @@ class RenderCalendar{
          ?>
         <?php if($day->getDay()=="01"): ?>
          <div class ="first-line">
-         <?php $book[]='<div class ="book"><div class="free" id="'.$day->getDateKey().'-col"></div>' ?>
+         <?php $book[]='<div class ="book"><div class="color" id="'.$day->getDateKey().'-col"></div>' ?>
 
          <?= $this->dayHtml($day)?>
          <?php elseif(($day->getMonth() != $nextday->getMonth())||($i==$nbday-1)):?> 
-        <?php $book[]='<div class="free" id="'.$day->getDateKey().'-col"></div></div>' ?>
+        <?php $book[]='<div class="color" id="'.$day->getDateKey().'-col"></div></div>' ?>
         <?= $this->dayHtml($day)?>
         </div>
         <?=implode('',$book);?>
@@ -90,7 +92,7 @@ class RenderCalendar{
         
         <?php else:?> 
         <?= $this->dayHtml($day)?>
-        <?php $book[]='<div class="'.$this->getClass($day).'" id="'.$day->getDateKey().'-col"></div>' ?>
+        <?php $book[]='<div class="color" id="'.$day->getDateKey().'-col" style="'.$this->getClass($day).'"></div>' ?>
         <?php endif;?>
         <?php endfor; ?>
         <?php
