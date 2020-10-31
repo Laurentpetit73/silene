@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Service\Pagination;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -22,5 +23,15 @@ class AdminBookingController extends AbstractController
             'current_menu' => 'booking',
             'pagination' => $pagination,
         ]);
+    }
+    /**
+     * @Route("/admin/booking/{id}/delete", name="admin_booking_delete")
+     */
+    public function delete(Booking $booking , EntityManagerInterface $manager )
+    {
+        $manager->remove($booking);
+        $manager->flush();
+        $this->addFlash('success',"La reservation a bien été supprimé");
+        return $this->redirectToRoute('admin_booking');
     }
 }

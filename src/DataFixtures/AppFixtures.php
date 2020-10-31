@@ -36,9 +36,9 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
                 ->setPassword($this->passwordEncoder->encodePassword($admin,'Laurent73'))
                 ->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
-        
 
-        $faker = Factory::create('fr_FR');
+        function fix($manager){
+            $faker = Factory::create('fr_FR');
 
         for($i=0;$i<mt_rand(15,20);$i++){
             $user = new User();
@@ -55,12 +55,18 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
                 $booking->setStartDate($sd)
                     ->setEndDate($se)
-                    ->setCustomer($user);
+                    ->setCustomer($user)
+                    ->setIsBooking(false);
             
                 $manager->persist($booking);
             }
 
         }
+
+        }
+        
+
+        
         $manager->flush();
     }
 }

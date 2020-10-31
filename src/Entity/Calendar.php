@@ -69,6 +69,7 @@ class Calendar
 
     /**
      * @ORM\ManyToOne(targetEntity=Booking::class, inversedBy="period")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $booking;
 
