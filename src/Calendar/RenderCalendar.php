@@ -78,11 +78,11 @@ class RenderCalendar{
          ?>
         <?php if($day->getDay()=="01"): ?>
          <div class ="first-line">
-         <?php $book[]='<div class ="book"><div class="color" id="'.$day->getDateKey().'-col"></div>' ?>
+         <?php $book[]='<div class ="book"><div class="color" id="'.$day->getDateKey().'" style="'.$this->getClass($day).'"></div>' ?>
 
          <?= $this->dayHtml($day)?>
          <?php elseif(($day->getMonth() != $nextday->getMonth())||($i==$nbday-1)):?> 
-        <?php $book[]='<div class="color" id="'.$day->getDateKey().'-col"></div></div>' ?>
+        <?php $book[]='<div class="color" id="'.$day->getDateKey().'" style="'.$this->getClass($day).'"></div></div>' ?>
         <?= $this->dayHtml($day)?>
         </div>
         <?=implode('',$book);?>
@@ -92,7 +92,7 @@ class RenderCalendar{
         
         <?php else:?> 
         <?= $this->dayHtml($day)?>
-        <?php $book[]='<div class="color" id="'.$day->getDateKey().'-col" style="'.$this->getClass($day).'"></div>' ?>
+        <?php $book[]='<div class="color" id="'.$day->getDateKey().'" style="'.$this->getClass($day).'"></div>' ?>
         <?php endif;?>
         <?php endfor; ?>
         <?php

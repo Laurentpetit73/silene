@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+         {{ encore_entry_link_tags('app') }}
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
         {% block stylesheets %}{% endblock %}
     </head>
@@ -16,7 +17,23 @@
         <div class="calendar-container">
         {{ test.render }}
         </div>
+        {% include '/admin/calendar/calendarform.html.twig' with {'form': form}%}
     </div> 
-        {% block javascripts %}{% endblock %}
+    {{ encore_entry_script_tags('app') }}
+        {% block javascripts %}
+     <script>  
+     $(document).ready(function(){
+         let nbclick =0
+         $('.color').click(function(){  
+             this.style.border = '1px red solid' 
+             nbclick ++
+             if(nbclick == 2){
+                 $('#exampleModal').modal('show')
+             }
+        
+        })})
+    </script>  
+   
+    {% endblock  %}
     </body>
 </html>
