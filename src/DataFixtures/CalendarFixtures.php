@@ -42,7 +42,7 @@ class CalendarFixtures extends Fixture implements FixtureGroupInterface
                 ['Samedi','Sam']
         ];
 
-        for($i=0 ; $i<=1000 ;$i++){
+        for($i=0 ; $i<=18250 ;$i++){
             
             $calendar = new Calendar();
             $calendar->setDateKey($date->format('Ymd'))
