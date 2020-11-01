@@ -5,34 +5,41 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
          {{ encore_entry_link_tags('app') }}
         <link rel="stylesheet" href="{{asset('css/style.css')}}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-     <div class="container">
     <nav>
     <div class="triangle-left"></div>
         <div class="year">{{year}}</div>
         <div class="triangle-right"></div> 
     </nav>
+    <div class="hidden-nav"></div>
         <div class="calendar-container">
         {{ test.render }}
         </div>
         {% include '/admin/calendar/calendarform.html.twig' with {'form': form}%}
-    </div> 
     {{ encore_entry_script_tags('app') }}
         {% block javascripts %}
      <script>  
-     $(document).ready(function(){
+     $(document).ready(function(test){
          let nbclick =0
+          let idstart = ''
+          let idend = ''
          $('.color').click(function(){  
-             this.style.border = '1px red solid' 
-             nbclick ++
-             if(nbclick == 2){
+             this.style.border = '1px red solid'
+             if(nbclick == 1){
+                 idend = this.id
                  $('#exampleModal').modal('show')
+                 $('#booking_startDate').val(idstart) 
+                 $('#booking_endDate').val(idend) 
              }
+             idstart = this.id
+             nbclick ++
         
         })})
-    </script>  
+    </script> 
+    {% include 'partials/calendarpicker.html.twig' with {'NotAvailableDays':bookingService.NotAvailableDays,'NotAvailableDaysEnd':bookingService.NotAvailableDaysEnd } %} 
    
     {% endblock  %}
     </body>

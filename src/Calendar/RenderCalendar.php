@@ -92,7 +92,7 @@ class RenderCalendar{
         
         <?php else:?> 
         <?= $this->dayHtml($day)?>
-        <?php $book[]='<div class="color" id="'.$day->getDateKey().'" style="'.$this->getClass($day).'"></div>' ?>
+        <?php $book[]='<div class="color" id="'.$day->getDate()->format('d/m/Y').'" style="'.$this->getClass($day).'"></div>' ?>
         <?php endif;?>
         <?php endfor; ?>
         <?php
