@@ -28,7 +28,6 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()  &&  $form->isValid()){
-            dump($request);
             $manager->persist($booking);
             $manager->flush();
 
