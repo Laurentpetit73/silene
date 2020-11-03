@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminAccountController!{% endblock %}
+
+{% block body %}
+<div class="row border">
+    <div class="col-3 px-0">
+        <div class="border-bottom"><h4 class="ml-5 my-4 ">Reservations</h4></div>
+        <div class="pl-5 pt-3">
+            <div class="py-2">
+                <h6>Chalet La Petite Silène</h6>
+                <p>Du 5/10/2020 Au 06/20/20</p>
+            </div>   
+        </div>
+        
+    </div>
+    <div class="col-5 border-right border-left px-0">
+        <div class="border-bottom"><h4 class="ml-5 my-4 ">Messages</h4></div>
+        <div class="px-5 py-2">
+            <div>
+                <p class="text-center py-1">14 juil 2017</p>
+                <p class="mb-0"><strong>La Petite Silène</strong></p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi voluptate voluptatum, officiis ipsam esse reiciendis perferendis rem dicta quos et vitae explicabo repellendus! Perferendis alias libero ratione velit reprehenderit.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 px-0">
+       <div class="border-bottom"><h4 class="ml-5 my-4 ">Détails</h4></div>
+        <div class="px-5 pt-3">
+                <div class="row text-center">
+                    <div class="col-6 border-right">
+                        <p>Arrivée</p> 
+                        <p>sam. 5 août</p>   
+                    </div>
+                    <div class="col-6">
+                        <p>Départ</p> 
+                        <p>sam. 5 août</p> 
+                    </div>
+                </div>
+                <div class="border-top mt-3">
+                    <h5 class="border-top pt-3">Qui vient ?</h6>
+                    <p>7 voyageurs</p>
+                    <p>1 bébé</p>
+                </div>
+                 <div class="border-top mt-3">
+                    <h5 class="border-top pt-3">Prix</h6>
+                    <p>1000€</p>
+                </div>
+                 <div class="border-top mt-3 ">
+               
+                    <h5 class="border-top pt-3">Statut</h6>
+                    <p class="alert alert-warning">Votre résevation est en atente d'acceptation</p>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

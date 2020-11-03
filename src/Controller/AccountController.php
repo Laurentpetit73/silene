@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\ProfilType;
 use App\Entity\PasswordUpdate;
 use App\Form\PasswordUpdateType;
+use App\Repository\BookingRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,6 @@ class AccountController extends AbstractController
     {
         
         $user = $this->getUser();
-        dump($user);
         $form = $this->createForm(ProfilType::class, $user);
         $form->handleRequest($request);
 
@@ -82,6 +82,20 @@ class AccountController extends AbstractController
             'form' => $form->createView(),
             'current_menu' => '', 
              
+        ]);
+    }
+    /**
+     * @Route("/account/bookings", name="account_bookings")
+     * @IsGranted("ROLE_USER")
+     */
+    public function booking()
+    {
+        $user = $this->getUser();
+        dump($user->getbooking()[0]);
+        die();
+     
+        return $this->render('account/booking.html.twig',[
+            'current_menu' => '', 
         ]);
     }
 }
