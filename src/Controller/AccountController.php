@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Booking;
 use App\Form\ProfilType;
 use App\Entity\PasswordUpdate;
 use App\Form\PasswordUpdateType;
 use App\Repository\BookingRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
+use Sample\CaptureIntentExamples\CreateOrder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -85,17 +87,26 @@ class AccountController extends AbstractController
         ]);
     }
     /**
-     * @Route("/account/bookings", name="account_bookings")
+     * @Route("/account/bookings/{id}", name="account_bookings",defaults={"id": ""})
      * @IsGranted("ROLE_USER")
      */
-    public function booking()
+    public function booking(Booking $booking=null)
     {
         $user = $this->getUser();
-        dump($user->getbooking()[0]);
-        die();
-     
+        if($booking == null){
+        
+        $booking = $user->getbookings()[$user->getbookings()->count() -1];
+        }
+
+        $allbooking=[];
+        for($i=$user->getbookings()->count()-1;$i>=0 ;$i--){
+        $allbooking[] = $user->getbookings()[$i];
+        }
+
         return $this->render('account/booking.html.twig',[
             'current_menu' => '', 
+            'booking' => $booking,
+            'allbooking' => $allbooking,
         ]);
     }
 }

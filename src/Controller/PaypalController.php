@@ -15,6 +15,7 @@ class PaypalController extends AbstractController
     {
         $payment = new CreateOrder();
         $json = json_encode($payment->createOrder()->result);
+        
 
         return $this->render('paypal/index.html.twig', [
             'payment' => $json,

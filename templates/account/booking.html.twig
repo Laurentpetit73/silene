@@ -7,10 +7,14 @@
     <div class="col-3 px-0">
         <div class="border-bottom"><h4 class="ml-5 my-4 ">Reservations</h4></div>
         <div class="pl-5 pt-3">
+        {% for book in allbooking %}
             <div class="py-2">
                 <h6>Chalet La Petite Silène</h6>
                 <p>Du 5/10/2020 Au 06/20/20</p>
-            </div>   
+                <p>{{book.amount}}</p>
+                <a href="{{path('account_bookings',{'id':book.id})}}">test</a>
+            </div> 
+        {% endfor %} 
         </div>
         
     </div>
@@ -44,14 +48,48 @@
                 </div>
                  <div class="border-top mt-3">
                     <h5 class="border-top pt-3">Prix</h6>
-                    <p>1000€</p>
+                    <p>{{booking.amount}}</p>
                 </div>
                  <div class="border-top mt-3 ">
-               
                     <h5 class="border-top pt-3">Statut</h6>
+                    {% if booking.isBooking == true %}
+                    <p class="alert alert-danger">Votre résevation est en atente de paiement</p>
+                    <div id="paypal-button-container"></div>
+                    {% else %}
                     <p class="alert alert-warning">Votre résevation est en atente d'acceptation</p>
+                    {% endif %}
                 </div>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+ <script src="https://www.paypal.com/sdk/js?client-id=AWh_RoqWaW6JioEflBotGI1KJ0cgh2VRF_fo7MjfwbVLnzG90Jn0tWp723FGp7F3yiZHipL1p-3t590l&currency=EUR"> 
+    </script>
+    <script>
+  paypal.Buttons({
+    createOrder: function() {
+        console.log('1')
+  return fetch('{{path('paypal')}}', {
+    method: 'post',
+    headers: {
+      'content-type': 'application/json'
+    }
+  }).then(function(res) {
+    return res.json();
+  }).then(function(data) {
+    return data.id; // Use the same key name for order ID on the client and server
+  });
+},
+onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Transaction completed by ' + details.payer.name.given_name);
+          });
+        },
+onCancel: function(data) {
+    document.location.href="http://localhost:8000/succes.php"; 
+        }
+    
+  }).render('#paypal-button-container');
+</script>
 {% endblock %}
