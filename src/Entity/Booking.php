@@ -61,11 +61,17 @@ class Booking
      */
     private $IsBooking;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $IsPay;
+
     public function __construct(EntityManagerInterface $manager)
     {
         $this->period = new ArrayCollection();
         $this->manager = $manager;
         $this->IsBooking = false;
+        $this->IsPay = false;
     }
 
     public function getId(): ?int
@@ -212,6 +218,9 @@ class Booking
 
     public function initialise():self
     {
+        if($this->IsPay == true){
+            return $this;
+        }
         $this->setNbJour();
 
         if($this->IsBooking){
@@ -231,6 +240,18 @@ class Booking
     public function setIsBooking(bool $IsBooking): self
     {
         $this->IsBooking = $IsBooking;
+
+        return $this;
+    }
+
+    public function getIsPay(): ?bool
+    {
+        return $this->IsPay;
+    }
+
+    public function setIsPay(bool $IsPay): self
+    {
+        $this->IsPay = $IsPay;
 
         return $this;
     }

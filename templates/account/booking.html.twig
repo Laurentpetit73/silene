@@ -52,9 +52,12 @@
                 </div>
                  <div class="border-top mt-3 ">
                     <h5 class="border-top pt-3">Statut</h6>
-                    {% if booking.isBooking == true %}
+                    {% if booking.IsPay == true %}
+                    <p class="alert alert-success">Votre résevation est payée</p>
+                    {% elseif booking.isBooking == true %}
                     <p class="alert alert-danger">Votre résevation est en atente de paiement</p>
                     <div id="paypal-button-container"></div>
+                    <a href="{{path('paypal_validate',{'id':booking.id})}}">test</a>
                     {% else %}
                     <p class="alert alert-warning">Votre résevation est en atente d'acceptation</p>
                     {% endif %}
@@ -70,7 +73,7 @@
   paypal.Buttons({
     createOrder: function() {
         console.log('1')
-  return fetch('{{path('paypal')}}', {
+  return fetch('{{path('paypal',{'id':booking.id})}}', {
     method: 'post',
     headers: {
       'content-type': 'application/json'
@@ -83,11 +86,11 @@
 },
 onApprove: function(data, actions) {
           return actions.order.capture().then(function(details) {
-            alert('Transaction completed by ' + details.payer.name.given_name);
+              document.location.href="{{path('paypal_validate',{'id':booking.id})}}"; 
           });
         },
 onCancel: function(data) {
-    document.location.href="http://localhost:8000/succes.php"; 
+   alert('Désolé il y a eu une erreur ou vous avez nnulé le paiement'); 
         }
     
   }).render('#paypal-button-container');
