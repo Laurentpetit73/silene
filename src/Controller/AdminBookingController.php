@@ -30,6 +30,7 @@ class AdminBookingController extends AbstractController
      */
     public function delete(Booking $booking , EntityManagerInterface $manager )
     {
+        $booking->setManager($manager);
         $manager->remove($booking);
         $manager->flush();
         $this->addFlash('success',"La reservation a bien été supprimé");

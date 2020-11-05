@@ -57,7 +57,6 @@
                     {% elseif booking.isBooking == true %}
                     <p class="alert alert-danger">Votre résevation est en atente de paiement</p>
                     <div id="paypal-button-container"></div>
-                    <a href="{{path('paypal_validate',{'id':booking.id})}}">test</a>
                     {% else %}
                     <p class="alert alert-warning">Votre résevation est en atente d'acceptation</p>
                     {% endif %}
@@ -81,16 +80,22 @@
   }).then(function(res) {
     return res.json();
   }).then(function(data) {
+      console.log(data.id)
     return data.id; // Use the same key name for order ID on the client and server
   });
 },
 onApprove: function(data, actions) {
           return actions.order.capture().then(function(details) {
-              document.location.href="{{path('paypal_validate',{'id':booking.id})}}"; 
+              console.log(data)
+              console.log(details)
+              let url = '{{path('paypal_validate',{'id':booking.id})}}'
+              url = url+'/'+details['id'];
+              console.log(url)
+              document.location.href= url 
           });
         },
 onCancel: function(data) {
-   alert('Désolé il y a eu une erreur ou vous avez nnulé le paiement'); 
+   alert('Désolé il y a eu une erreur ou vous avez annulé le paiement ou il y a eu un problême'); 
         }
     
   }).render('#paypal-button-container');

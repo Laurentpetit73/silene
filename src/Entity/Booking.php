@@ -66,6 +66,11 @@ class Booking
      */
     private $IsPay;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $paypalId;
+
     public function __construct(EntityManagerInterface $manager)
     {
         $this->period = new ArrayCollection();
@@ -218,7 +223,7 @@ class Booking
 
     public function initialise():self
     {
-        if($this->IsPay == true){
+        if($this->IsPay || $this->paypalId){
             return $this;
         }
         $this->setNbJour();
@@ -261,6 +266,30 @@ class Booking
         $this->manager = $manager;
 
         return $this;
+    }
+
+    public function getPaypalId(): ?string
+    {
+        return $this->paypalId;
+    }
+
+    public function setPaypalId(?string $paypalId): self
+    {
+        $this->paypalId = $paypalId;
+
+        return $this;
+    }
+    /** 
+    * @ORM\PreRemove
+    */
+    
+    public function remove()
+    {
+        $days = $this->getPeriod();
+        foreach($days as $day){
+            $day->setIsStart(false);
+            $day->setIsEnd(false);
+        }
     }
 
 }

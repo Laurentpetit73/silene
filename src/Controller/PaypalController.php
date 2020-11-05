@@ -13,25 +13,37 @@ class PaypalController extends AbstractController
     /**
      * @Route("/paypal/{id}", name="paypal")
      */
-    public function index(Booking $booking)
+    public function index(Booking $booking,EntityManagerInterface $manager)
     {
         $payment = new CreateOrder();
-        $json = json_encode($payment->createOrder(false,$booking)->result);
+
+        $order = $payment->createOrder(false,$booking)->result;
+        $id = $order->id;
+        $json = json_encode($order);
+
+        $booking->setPaypalId($id);
+        $manager->persist($booking);
+        $manager->flush();
         
 
         return $this->render('paypal/index.html.twig', [
             'payment' => $json,
         ]);
     }
+
      /**
-     * @Route("/paypal/validate/{id}", name="paypal_validate")
+     * @Route("/paypal/validate/{id}/{paypalid}", name="paypal_validate")
      */
-    public function validate(Booking $booking, EntityManagerInterface $manager)
+    public function validate(Booking $booking, string $paypalid='', EntityManagerInterface $manager)
     {
-       $booking->setIsPay(true);
-       $manager->persist($booking);
-       $manager->flush();
-        
+        if($paypalid == $booking->getPaypalId()){
+            $booking->setIsPay(true);
+            $manager->persist($booking);
+            $manager->flush();
+        }else{
+            $this->addFlash('danger',"Il y eu un probleme veuillez nous contacter avant de réefectuer un paiement");
+            $this->redirectToRoute('account_bookings',['id'=> $booking->getId()]);
+        }
 
         return $this->redirectToRoute('account_bookings',['id'=> $booking->getId()]);
     }
