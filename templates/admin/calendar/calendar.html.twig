@@ -9,8 +9,11 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+    <div class="dash mt-3 ml-3" style=" z-index: 2;position: fixed;">
+    <a href="{{path('admin_dashboard')}}" class="btn btn-dark">Retour DashBoard</a>
+    </div>
     <nav>
-    <div class="triangle-left"></div>
+        <div class="triangle-left"></div>
         <div class="year">{{year}}</div>
         <div class="triangle-right"></div> 
     </nav>
