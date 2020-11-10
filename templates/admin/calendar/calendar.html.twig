@@ -53,7 +53,12 @@
                       newyear = +actualyear +1
                   }
                   let url = document.location.href
-                  document.location.href = url.replace(actualyear,newyear)
+                  if(url.includes(actualyear)){
+                      document.location.href = url.replace(actualyear,newyear)
+                  }else{
+                      document.location.href = url+'/'+newyear
+                  }
+                  
               })
 
          })

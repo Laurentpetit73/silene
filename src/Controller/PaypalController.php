@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Service\MessageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sample\CaptureIntentExamples\CreateOrder;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,6 +38,9 @@ class PaypalController extends AbstractController
     public function validate(Booking $booking, string $paypalid='', EntityManagerInterface $manager)
     {
         if($paypalid == $booking->getPaypalId()){
+            $messageService = new MessageService($manager,$booking);
+            $messageService->sendConfirmPaymentMessage();
+            
             $booking->setIsPay(true);
             $manager->persist($booking);
             $manager->flush();

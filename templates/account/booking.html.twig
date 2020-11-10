@@ -10,7 +10,7 @@
         {% for book in allbooking %}
             <div class="py-2">
                 <h6>Chalet La Petite Silène</h6>
-                <p>Du 5/10/2020 Au 06/20/20</p>
+                <p>Du {{ book.startDate|date("d/m/Y") }} Au {{ book.endDate|date("d/m/Y") }}</p>
                 <p>{{book.amount}}</p>
                 <a href="{{path('account_bookings',{'id':book.id})}}">test</a>
             </div> 
@@ -22,9 +22,24 @@
         <div class="border-bottom"><h4 class="ml-5 my-4 ">Messages</h4></div>
         <div class="px-5 py-2">
             <div>
-                <p class="text-center py-1">14 juil 2017</p>
-                <p class="mb-0"><strong>La Petite Silène</strong></p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae eligendi voluptate voluptatum, officiis ipsam esse reiciendis perferendis rem dicta quos et vitae explicabo repellendus! Perferendis alias libero ratione velit reprehenderit.</p>
+                {% set date = '' %}
+                {% for message in booking.messages %}
+                {% if message.createdAt|date("d/m/Y") != date %}
+                <p class="text-center py-1">{{ message.createdAt|date("d/m/Y") }}</p>
+                {% endif %}
+                <p class="mb-0"><strong>{% if message.isAdmin %}La Petite Silène{% else %}{{message.booking.customer.fullName}}{% endif %} </strong> <span class="text-secondary"><small>  {{ message.createdAt|date("H:m") }}</small></span></p>
+                <p>{{message.content|raw|nl2br}}</p>
+                {% set date = message.createdAt|date("d/m/Y") %}
+                
+                {% endfor %}
+                {{form_start(form)}}
+                <div class="input-group mb-3">
+                 {{form_widget(form.content)}}
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
+                    </div>
+                </div>
+                 {{form_end(form)}}
             </div>
         </div>
     </div>

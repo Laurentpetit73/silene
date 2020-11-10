@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Message;
 use App\Form\ProfilType;
+use App\Form\MessageType;
 use App\Entity\PasswordUpdate;
+use App\Service\MessageService;
 use App\Form\PasswordUpdateType;
 use App\Repository\BookingRepository;
 use Symfony\Component\Form\FormError;
@@ -90,7 +93,7 @@ class AccountController extends AbstractController
      * @Route("/account/bookings/{id}", name="account_bookings",defaults={"id": ""})
      * @IsGranted("ROLE_USER")
      */
-    public function booking(Booking $booking=null)
+    public function booking(Booking $booking=null, Request $request, EntityManagerInterface $manager)
     {
         $user = $this->getUser();
         if($booking == null){
@@ -103,10 +106,21 @@ class AccountController extends AbstractController
         $allbooking[] = $user->getbookings()[$i];
         }
 
+        $message = new Message();
+        $form = $this->createForm(MessageType::class,$message);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $messageService = new MessageService($manager,$booking);
+            $messageService->sendCustomerMessage($message);
+
+        }
+        
+
         return $this->render('account/booking.html.twig',[
             'current_menu' => '', 
             'booking' => $booking,
             'allbooking' => $allbooking,
+            'form'=>$form->createView()
         ]);
     }
 }

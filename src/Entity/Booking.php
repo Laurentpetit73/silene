@@ -71,12 +71,18 @@ class Booking
      */
     private $paypalId;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="booking", orphanRemoval=true)
+     */
+    private $messages;
+
     public function __construct(EntityManagerInterface $manager)
     {
         $this->period = new ArrayCollection();
         $this->manager = $manager;
         $this->IsBooking = false;
         $this->IsPay = false;
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -290,6 +296,37 @@ class Booking
             $day->setIsStart(false);
             $day->setIsEnd(false);
         }
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setBooking($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getBooking() === $this) {
+                $message->setBooking(null);
+            }
+        }
+
+        return $this;
     }
 
 }

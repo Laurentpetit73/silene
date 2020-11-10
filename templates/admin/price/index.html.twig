@@ -1,0 +1,140 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello AdminDashboardController!{% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+      <h2>Gestion des Prix</h2>
+      {{form_start(form)}}
+      <div class="row">
+        <div class="col-4">
+        <h4 class="pb-3">Prix par default</h4>
+          
+          {{form_widget(form.defaultDays)}}
+          
+          
+          
+          
+        </div>
+        <div class="col-4">
+          <h4 class="pb-3">Saison Hiver</h4>
+          <div id="select-summer">
+            <input type="date" name="start-winter" value="2020-12-05">
+            <input type="date" name="end-winter" value="2021-04-03">
+          </div>
+          {{form_widget(form.specialWeeks)}}
+           
+          
+           <button type='button' id="generateWinter" class='btn btn-primary'>Generer</button>
+        </div>
+        <div class="col-4">
+          <h4 class="pb-3">Saison Eté</h4>
+        </div>
+      </div>
+      <button type='submit' class='btn btn-primary'>Sauvgarder</button>
+       {{form_end(form)}}
+
+      
+
+{% endblock %}
+
+{% block _price_config_defaultDays_entry_widget %} 
+
+<div class="row">
+  <div class="col-6">
+  {{form.vars.value.name}}:
+  </div>
+  <div class="col-6">
+  {{form_widget(form.price)}}
+  </div>
+</div>
+
+{% endblock %} 
+
+{% block _price_config_defaultDays_entry_row %} 
+
+{{form_widget(form)}}
+
+{% endblock %} 
+
+{% block _price_config_specialWeeks_widget %} 
+<div class="row">
+  <div class="col-4">
+   Du :
+  </div>
+  <div class="col-4">
+  Au:
+  </div>
+  <div class="col-4">
+  Prix:
+  </div>
+</div>
+
+{{form_widget(form)}}
+
+{% endblock %} 
+
+{% block _price_config_specialWeeks_entry_widget %} 
+
+<div class="row">
+  <div class="col-4 px-0">
+   {{form_widget(form.startDate)}}
+  
+  </div>
+   <div class="col-4 px-0">
+   {{form_widget(form.endDate)}}
+  
+  </div>
+  <div class="col-4">
+  {{form_widget(form.price)}}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block _price_config_specialWeeks_entry_label %} 
+{% endblock %}
+
+
+
+{% block javascripts %}
+<script>
+  $('#generateWinter').click(function(){
+    let tabDate =[]
+    let test = $('input[name ="start-winter"]').val()
+    let test2 = $('input[name ="end-winter"]').val()
+    let date =  new Date(test)
+    let date2 =  new Date(test2)
+    
+
+    while(date.getDate() != date2.getDate() ){
+      let startDate = new Date(date)
+      date.setDate(date.getDate() + 7);
+      let endDate = new Date(date)
+      tabDate.push([startDate,endDate])
+      
+    }
+
+    for(let i =0 ; i < tabDate.length ; i++){
+      let tmpl = $('#price_config_specialWeeks').data('prototype').replace(/__name__/g,i);
+      $('#price_config_specialWeeks').append(tmpl)
+      let id = '#price_config_specialWeeks_'+i+'_startDate'
+      let id2 = '#price_config_specialWeeks_'+i+'_endDate'
+      let m = tabDate[i][0]
+      let m2 = tabDate[i][1]
+      var dateString = m.getFullYear() +"-"+ ("0" + (m.getMonth() + 1)).slice(-2) +"-"+ ("0" + (m.getDate())).slice(-2);
+      var dateString2 = m2.getFullYear() +"-"+ ("0" + (m2.getMonth() + 1)).slice(-2) +"-"+ ("0" + (m2.getDate())).slice(-2);
+      $(id).val(dateString)
+      $(id2).val(dateString2)
+      $('#select-summer').hide()
+
+    }
+    
+
+  })
+</script>
+
+
+
+{% endblock %}

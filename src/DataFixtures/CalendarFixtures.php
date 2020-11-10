@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Calendar;
+use App\Entity\DefaultDay;
+use App\Entity\PriceConfig;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
@@ -61,6 +63,16 @@ class CalendarFixtures extends Fixture implements FixtureGroupInterface
             $date->add($interval);
             $manager->persist($calendar);
 
+        }
+        for($j=2020 ; $j<2060 ; $j++){
+            $priceconfig = (new PriceConfig())->setYear($j);
+            for($i=0;$i<count($day);$i++){
+                $defaultDay = new DefaultDay();
+                $defaultDay->setName($day[$i][0])->setNumber($i)->setYear($j)->setPriceConfig($priceconfig)->setPrice(200);
+                $manager->persist($defaultDay);
+
+            }
+            $manager->persist($priceconfig);
         }
         $manager->flush();
     }

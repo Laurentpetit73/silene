@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Message;
 use App\Form\BookingType;
+use App\Service\BookingService;
 use App\Repository\BookingRepository;
 use App\Repository\CalendarRepository;
-use App\Service\BookingService;
+use App\Service\MessageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +30,8 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()  &&  $form->isValid()){
+            $messageService = new MessageService($manager,$booking);
+            $messageService->sendWelcomeMessage();
             $manager->persist($booking);
             $manager->flush();
 

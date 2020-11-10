@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Booking;
 use App\Form\BookingType;
 use App\Calendar\RenderCalendar;
@@ -16,8 +17,12 @@ class AdminCalendarController extends AbstractController
     /**
      * @Route("/admin/calendar/{year}", name="admin_calendar")
      */
-    public function index(CalendarRepository $calendar, EntityManagerInterface $manager, Request $request, $year = '2024')
+    
+    public function index(CalendarRepository $calendar, EntityManagerInterface $manager, Request $request, $year = null)
     {
+        if($year == null){
+            $year = (new DateTime())->format('Y');
+        }
         $booking = New Booking($manager);
         $form = $this->createForm(BookingType::class,$booking);
         $calendaryear = $calendar->findBy(['year' => $year]);
